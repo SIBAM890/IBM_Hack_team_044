@@ -650,7 +650,7 @@ export default function App() {
     <div id="app">
 
       {/* ── Header ───────────────────────────────────────────────────────────── */}
-      <header id="top-bar">
+      <header id="top-bar" className={currentTab === 'landing' ? 'top-bar-transparent' : ''}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span id="system-name" title="Risk Assessment and Incident Control">RAIC</span>
           <span id="system-tagline">Risk Assessment &amp; Incident Control</span>

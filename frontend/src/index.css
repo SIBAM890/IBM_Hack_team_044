@@ -68,6 +68,18 @@ body {
   padding: 0 20px;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+#top-bar.top-bar-transparent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 30;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .nav-tabs {
@@ -100,6 +112,41 @@ body {
   color: var(--text);
   border: 1px solid var(--border);
   font-weight: 700;
+}
+
+#top-bar.top-bar-transparent #system-name {
+  color: #ffffff;
+}
+
+#top-bar.top-bar-transparent #system-tagline {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#top-bar.top-bar-transparent .nav-tab {
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+#top-bar.top-bar-transparent .nav-tab:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+}
+
+#top-bar.top-bar-transparent .nav-tab.active {
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  font-weight: 700;
+}
+
+#top-bar.top-bar-transparent #header-meta {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+#top-bar.top-bar-transparent #header-meta .sep {
+  color: rgba(255, 255, 255, 0.25);
 }
 
 #system-name {
@@ -785,8 +832,8 @@ body {
   overflow: hidden;
   background: #090e17;
   border-bottom: 1px solid #1e293b;
-  padding: 88px 24px 80px;
-  min-height: 500px;
+  padding: 104px 24px 80px;
+  min-height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;

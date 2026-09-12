@@ -1,0 +1,159 @@
+{
+  "nodes": [
+    {
+      "id": "Base",
+      "name": "Rescue Base"
+    },
+    {
+      "id": "W1",
+      "name": "Ward 1"
+    },
+    {
+      "id": "W2",
+      "name": "Ward 2"
+    },
+    {
+      "id": "W3",
+      "name": "Ward 3"
+    },
+    {
+      "id": "W4",
+      "name": "Ward 4"
+    },
+    {
+      "id": "W5",
+      "name": "Ward 5"
+    },
+    {
+      "id": "W6",
+      "name": "Ward 6"
+    },
+    {
+      "id": "W7",
+      "name": "Ward 7"
+    },
+    {
+      "id": "W8",
+      "name": "Ward 8"
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "E1",
+      "from": "Base",
+      "to": "W1",
+      "base_travel_time_min": 10,
+      "blocked": false,
+      "exposed_wards": [
+        "W1"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    },
+    {
+      "edge_id": "E2",
+      "from": "Base",
+      "to": "W4",
+      "base_travel_time_min": 15,
+      "blocked": false,
+      "exposed_wards": [
+        "W4"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    },
+    {
+      "edge_id": "E3",
+      "from": "W1",
+      "to": "W2",
+      "base_travel_time_min": 5,
+      "blocked": false,
+      "exposed_wards": [
+        "W1",
+        "W2"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    },
+    {
+      "edge_id": "E4",
+      "from": "W2",
+      "to": "W3",
+      "base_travel_time_min": 8,
+      "blocked": false,
+      "exposed_wards": [
+        "W2",
+        "W3"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    },
+    {
+      "edge_id": "E5",
+      "from": "W4",
+      "to": "W5",
+      "base_travel_time_min": 6,
+      "blocked": false,
+      "exposed_wards": [
+        "W4",
+        "W5"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    },
+    {
+      "edge_id": "E6",
+      "from": "W5",
+      "to": "W6",
+      "base_travel_time_min": 7,
+      "blocked": false,
+      "exposed_wards": [
+        "W5",
+        "W6"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    },
+    {
+      "edge_id": "E7",
+      "from": "W6",
+      "to": "W7",
+      "base_travel_time_min": 12,
+      "blocked": true,
+      "exposed_wards": [
+        "W6",
+        "W7"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    },
+    {
+      "edge_id": "E8",
+      "from": "W5",
+      "to": "W8",
+      "base_travel_time_min": 9,
+      "blocked": false,
+      "exposed_wards": [
+        "W5",
+        "W8"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    },
+    {
+      "edge_id": "E9",
+      "from": "W3",
+      "to": "W7",
+      "base_travel_time_min": 20,
+      "blocked": true,
+      "exposed_wards": [
+        "W3",
+        "W7"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    },
+    {
+      "edge_id": "E10",
+      "from": "Base",
+      "to": "W7",
+      "base_travel_time_min": 45,
+      "blocked": true,
+      "exposed_wards": [
+        "W7"
+      ],
+      "last_updated": "2026-09-12T00:00:00Z"
+    }
+  ]
+}

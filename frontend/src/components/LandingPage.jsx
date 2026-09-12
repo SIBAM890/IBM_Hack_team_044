@@ -36,16 +36,58 @@ export default function LandingPage({ onLaunchDashboard, wardsCount, roadBlocked
             </div>
           </div>
 
-          <div className="landing-hero-illustration">
-            <div className="hero-illustration-card">
-              <img 
-                src="/illustrations/flood_rescue_hero.jpg" 
-                alt="Flood rescue and disaster response operations" 
-                className="hero-illustration-img" 
-              />
-              <div className="hero-illustration-caption">
-                <span className="hic-dot"></span>
-                <span>Active Flood Evacuation &amp; Staged Rescue Coordination</span>
+          <div className="landing-hero-gis-viewport">
+            <div className="gis-outer-card">
+              {/* Header Bar */}
+              <div className="gis-header-bar">
+                <div className="gis-header-left">
+                  <span className="gis-header-tag">PATNA TACTICAL GIS // ACTIVE INUNDATION CONTOURS</span>
+                </div>
+                <div className="gis-header-right">
+                  <span className="gis-live-pulse"></span>
+                  <span className="gis-live-text">LIVE TELEMETRY</span>
+                </div>
+              </div>
+
+              {/* Map Image Container with Overlay Tactical HUD Badges */}
+              <div className="gis-map-viewport">
+                <img 
+                  src="/illustrations/tactical_gis_map.jpg" 
+                  alt="Patna Tactical GIS Active Inundation Contours" 
+                  className="gis-map-img" 
+                />
+
+                {/* Top-Left Floating Badge */}
+                <div className="gis-hud-badge-tl">
+                  <div className="hud-badge-label">SURGE CONTOUR MODEL</div>
+                  <div className="hud-badge-danger">Danger Mark: 48.6m (BREACHED)</div>
+                </div>
+
+                {/* Bottom-Right Floating Route Badge */}
+                <div className="gis-hud-badge-br">
+                  <div className="hud-badge-label">ACTIVE INBOUND DISPATCH CORRIDOR</div>
+                  <div className="hud-badge-route">HQ Base → Sector 7 Centroid | Travel Time: 14.2 min</div>
+                  <div className="hud-badge-subtext">Corridor Hazard Penalty: MINIMAL | Segments Flagged: 0</div>
+                </div>
+
+                {/* Bottom-Left Legend Pill */}
+                <div className="gis-hud-legend">
+                  <span className="gis-leg-item leg-high">
+                    <span className="leg-dot dot-red"></span> High Risk (H &gt; 70)
+                  </span>
+                  <span className="gis-leg-item leg-mod">
+                    <span className="leg-dot dot-amber"></span> Moderate (H: 50-70)
+                  </span>
+                  <span className="gis-leg-item leg-safe">
+                    <span className="leg-dot dot-teal"></span> Safe/Low (H &lt; 50)
+                  </span>
+                </div>
+              </div>
+
+              {/* Footer Status Bar */}
+              <div className="gis-footer-bar">
+                <span>Elevation Model: SRTM 30m · Re-route Latency: &lt;120ms</span>
+                <span>Recon Unit: Drone Pass #04 Active</span>
               </div>
             </div>
           </div>

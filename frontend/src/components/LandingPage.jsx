@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function LandingPage({ onLaunchDashboard, wardsCount, roadBlocked }) {
   return (
-    <div className="landing-container">
-      {/* Hero Section — Full-Width Centered with Atmospheric Tactical Map Background */}
-      <section className="landing-hero-backdrop-wrap">
+    <div className="landing-page-root">
+      {/* Hero Section — Full-Bleed Atmospheric Tactical Map Background */}
+      <section className="landing-hero-fullbleed">
         {/* Atmospheric Tactical Map Background Layer */}
         <div className="hero-bg-map-layer">
           <img 
@@ -47,8 +47,10 @@ export default function LandingPage({ onLaunchDashboard, wardsCount, roadBlocked
         </div>
       </section>
 
-      {/* Operational Risk Comparison Section */}
-      <section className="landing-comparison-section">
+      {/* Main Content Body */}
+      <div className="landing-body-container">
+        {/* Operational Risk Comparison Section */}
+        <section className="landing-comparison-section">
         <div className="section-header-center">
           <span className="section-kicker">HUMAN OPERATIONAL RISK MODEL</span>
           <h2 className="landing-section-title">
@@ -250,6 +252,7 @@ export default function LandingPage({ onLaunchDashboard, wardsCount, roadBlocked
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }

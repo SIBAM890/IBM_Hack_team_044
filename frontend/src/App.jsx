@@ -652,8 +652,8 @@ export default function App() {
       {/* ── Header ───────────────────────────────────────────────────────────── */}
       <header id="top-bar">
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span id="system-name">RAIC</span>
-          <span id="system-tagline">Disaster Risk Prioritization &amp; Response</span>
+          <span id="system-name" title="Risk Assessment and Incident Control">RAIC</span>
+          <span id="system-tagline">Risk Assessment &amp; Incident Control</span>
           
           <div className="nav-tabs">
             <button 

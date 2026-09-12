@@ -10,7 +10,7 @@ export default function LandingPage({ onLaunchDashboard, wardsCount, roadBlocked
           District Emergency Operations | Urban Inundation Model
         </div>
         <h1 className="landing-title">
-          Rapid Assessment &amp;<br />Intelligent Coordination
+          Risk Assessment &amp;<br />Incident Control
         </h1>
         <p className="landing-subtitle">
           Lightweight, explainable disaster risk prioritization and multi-criteria response planning system for district emergency control rooms.

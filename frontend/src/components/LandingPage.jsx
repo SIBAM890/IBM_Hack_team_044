@@ -5,32 +5,50 @@ export default function LandingPage({ onLaunchDashboard, wardsCount, roadBlocked
     <div className="landing-container">
       {/* Hero Section */}
       <section className="landing-hero">
-        <div className="landing-badge">
-          <span className="badge-dot"></span>
-          District Emergency Operations | Urban Inundation Model
-        </div>
-        <h1 className="landing-title">
-          Risk Assessment &amp;<br />Incident Control
-        </h1>
-        <p className="landing-subtitle">
-          Lightweight, explainable disaster risk prioritization and multi-criteria response planning system for district emergency control rooms.
-        </p>
-        
-        <div className="landing-cta-group">
-          <button 
-            className="landing-btn landing-btn-primary"
-            onClick={onLaunchDashboard}
-          >
-            Launch Control Room Dashboard &rarr;
-          </button>
-          <a 
-            href="http://localhost:8000/docs" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="landing-btn landing-btn-secondary"
-          >
-            View OpenAPI Backend Docs &#8599;
-          </a>
+        <div className="landing-hero-grid">
+          <div className="landing-hero-content">
+            <div className="landing-badge">
+              <span className="badge-dot"></span>
+              District Emergency Operations | Urban Inundation Model
+            </div>
+            <h1 className="landing-title">
+              Risk Assessment &amp;<br />Incident Control
+            </h1>
+            <p className="landing-subtitle">
+              Lightweight, explainable disaster risk prioritization and multi-criteria response planning system for district emergency control rooms.
+            </p>
+            
+            <div className="landing-cta-group">
+              <button 
+                className="landing-btn landing-btn-primary"
+                onClick={onLaunchDashboard}
+              >
+                Launch Control Room Dashboard &rarr;
+              </button>
+              <a 
+                href="http://localhost:8000/docs" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="landing-btn landing-btn-secondary"
+              >
+                View OpenAPI Docs &#8599;
+              </a>
+            </div>
+          </div>
+
+          <div className="landing-hero-illustration">
+            <div className="hero-illustration-card">
+              <img 
+                src="/illustrations/flood_rescue_hero.jpg" 
+                alt="Flood rescue and disaster response operations" 
+                className="hero-illustration-img" 
+              />
+              <div className="hero-illustration-caption">
+                <span className="hic-dot"></span>
+                <span>Active Flood Evacuation &amp; Staged Rescue Coordination</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

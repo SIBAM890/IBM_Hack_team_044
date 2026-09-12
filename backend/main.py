@@ -1,11 +1,34 @@
 import json
 import os
-from fastapi import FastAPI
+import threading
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from models.schemas import Observation, RoadStatusUpdate, Ward, Edge
 from services import hazard_service, vulnerability_service, priority_service, routing_service
 
 app = FastAPI(title="Ward-Level Disaster Risk Prioritization")
+
+# Enable CORS for frontend integration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Global Exception Handler to prevent stack trace leaks
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={"message": "An internal server error occurred."},
+    )
+
+# Global state thread lock
+db_lock = threading.Lock()
 
 # Load data on startup
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
@@ -33,7 +56,14 @@ def startup_event():
 
 @app.get("/scenario")
 def get_scenario():
-    pass
+    """
+    Returns the current state snapshot of the scenario (wards and edges).
+    """
+    with db_lock:
+        return {
+            "wards": [ward.model_dump() for ward in wards_db],
+            "edges": [edge.model_dump() for edge in edges_db],
+        }
 
 @app.get("/hazard")
 def get_hazard():
@@ -83,8 +113,10 @@ from services import hazard_service, vulnerability_service, priority_service, ro
 
 @app.post("/observation")
 def post_observation(obs: Observation):
-    return observation_service.handle_observation_update(obs, wards_db)
+    with db_lock:
+        return observation_service.handle_observation_update(obs, wards_db)
 
 @app.post("/road-status")
 def post_road_status(status: RoadStatusUpdate):
-    return road_status_service.handle_road_status_update(status, edges_db, wards_db)
+    with db_lock:
+        return road_status_service.handle_road_status_update(status, edges_db, wards_db)

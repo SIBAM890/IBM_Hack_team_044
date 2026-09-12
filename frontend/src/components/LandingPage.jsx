@@ -44,26 +44,6 @@ export default function LandingPage({ onLaunchDashboard, wardsCount, roadBlocked
               View OpenAPI Docs &#8599;
             </a>
           </div>
-
-          {/* 4 Centered Metric Stat Cards */}
-          <div className="hero-stat-cards-row">
-            <div className="hero-stat-card">
-              <div className="hsc-value">8</div>
-              <div className="hsc-label">District Sectors Monitored</div>
-            </div>
-            <div className="hero-stat-card">
-              <div className="hsc-value">48.6m</div>
-              <div className="hsc-label">River Danger Mark</div>
-            </div>
-            <div className="hero-stat-card">
-              <div className="hsc-value">Multi-Criteria</div>
-              <div className="hsc-label">Explainable Risk Model</div>
-            </div>
-            <div className="hero-stat-card">
-              <div className="hsc-value">&lt;120ms</div>
-              <div className="hsc-label">Dynamic Re-route Latency</div>
-            </div>
-          </div>
         </div>
       </section>
 

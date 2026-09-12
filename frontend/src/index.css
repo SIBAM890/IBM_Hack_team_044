@@ -838,8 +838,8 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center center;
-  opacity: 0.55;
-  filter: saturate(1.1) contrast(1.05);
+  opacity: 0.82;
+  filter: saturate(1.15) contrast(1.08);
 }
 
 .hero-bg-overlay {
@@ -852,9 +852,9 @@ body {
   height: 100%;
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 255, 255, 0.88) 0%,
-    rgba(255, 255, 255, 0.74) 50%,
-    rgba(241, 245, 249, 0.88) 100%
+    rgba(255, 255, 255, 0.76) 0%,
+    rgba(255, 255, 255, 0.52) 55%,
+    rgba(241, 245, 249, 0.78) 100%
   );
 }
 

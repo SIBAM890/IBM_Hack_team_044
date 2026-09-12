@@ -1,0 +1,110 @@
+[
+  {
+    "edge_id": "E1",
+    "from": "N1",
+    "to": "N2",
+    "base_travel_time_min": 6,
+    "blocked": false,
+    "exposed_wards": ["W1"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E2",
+    "from": "N2",
+    "to": "N3",
+    "base_travel_time_min": 8,
+    "blocked": false,
+    "exposed_wards": ["W1", "W3"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E3",
+    "from": "N3",
+    "to": "N5",
+    "base_travel_time_min": 10,
+    "blocked": false,
+    "exposed_wards": ["W3", "W5"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E4",
+    "from": "N5",
+    "to": "N6",
+    "base_travel_time_min": 5,
+    "blocked": false,
+    "exposed_wards": ["W5", "W6"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E5",
+    "from": "N6",
+    "to": "N7",
+    "base_travel_time_min": 9,
+    "blocked": false,
+    "exposed_wards": ["W6", "W7"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E6",
+    "from": "N7",
+    "to": "N4",
+    "base_travel_time_min": 7,
+    "blocked": false,
+    "exposed_wards": ["W7", "W4"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E7",
+    "from": "N2",
+    "to": "N6",
+    "base_travel_time_min": 12,
+    "blocked": false,
+    "exposed_wards": ["W2", "W6"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E8",
+    "from": "N1",
+    "to": "N8",
+    "base_travel_time_min": 11,
+    "blocked": false,
+    "exposed_wards": ["W1", "W8"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E9",
+    "from": "N8",
+    "to": "N5",
+    "base_travel_time_min": 14,
+    "blocked": false,
+    "exposed_wards": ["W8", "W5"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E10",
+    "from": "N7",
+    "to": "N9",
+    "base_travel_time_min": 6,
+    "blocked": false,
+    "exposed_wards": ["W7"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E11",
+    "from": "N9",
+    "to": "N10",
+    "base_travel_time_min": 10,
+    "blocked": false,
+    "exposed_wards": ["W4"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  },
+  {
+    "edge_id": "E12",
+    "from": "N3",
+    "to": "N4",
+    "base_travel_time_min": 8,
+    "blocked": false,
+    "exposed_wards": ["W2", "W5"],
+    "last_updated": "2026-09-12T18:00:00Z"
+  }
+]

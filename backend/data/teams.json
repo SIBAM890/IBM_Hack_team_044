@@ -1,0 +1,47 @@
+[
+  {
+    "id": "T1",
+    "callsign": "NDRF Alpha",
+    "capacity": 10,
+    "type": "general",
+    "has_medical": true,
+    "status": "available",
+    "base_node": "N1"
+  },
+  {
+    "id": "T2",
+    "callsign": "SDRF Bravo",
+    "capacity": 5,
+    "type": "general",
+    "has_medical": false,
+    "status": "available",
+    "base_node": "N2"
+  },
+  {
+    "id": "T3",
+    "callsign": "Fire & Rescue Gamma",
+    "capacity": 6,
+    "type": "specialized",
+    "has_medical": false,
+    "status": "available",
+    "base_node": "N5"
+  },
+  {
+    "id": "T4",
+    "callsign": "Medical Response Delta",
+    "capacity": 4,
+    "type": "medical",
+    "has_medical": true,
+    "status": "available",
+    "base_node": "N6"
+  },
+  {
+    "id": "T5",
+    "callsign": "Civil Defense Epsilon",
+    "capacity": 8,
+    "type": "general",
+    "has_medical": false,
+    "status": "available",
+    "base_node": "N8"
+  }
+]

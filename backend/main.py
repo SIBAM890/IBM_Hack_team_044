@@ -6,9 +6,16 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from models.schemas import Observation, RoadStatusUpdate, Ward, Edge
-from services import hazard_service, vulnerability_service, priority_service, routing_service
+from services import (
+    hazard_service,
+    vulnerability_service,
+    priority_service,
+    routing_service,
+    observation_service,
+    road_status_service,
+)
 
-app = FastAPI(title="Ward-Level Disaster Risk Prioritization")
+app = FastAPI(title="Ward-Level Disaster Risk Prioritization", version="1.0.0")
 
 # Enable CORS for frontend integration
 app.add_middleware(
@@ -45,14 +52,18 @@ def load_edges() -> List[Edge]:
         data = json.load(f)
         return [Edge(**e) for e in data.get("edges", [])]
 
-wards_db = []
-edges_db = []
+wards_db: List[Ward] = []
+edges_db: List[Edge] = []
 
 @app.on_event("startup")
 def startup_event():
     global wards_db, edges_db
     wards_db = load_wards()
     edges_db = load_edges()
+
+@app.get("/")
+def root():
+    return {"system": "RAIC", "status": "operational", "port": 8000}
 
 @app.get("/scenario")
 def get_scenario():
@@ -101,15 +112,9 @@ def get_assignments():
 
 @app.get("/route/{team_id}/{ward_id}")
 def get_route(team_id: str, ward_id: str):
-    # Retrieve hazard data for routing weights
     hazards = hazard_service.calculate_hazard(wards_db)
-    
-    # We assume 'Base' is the starting point for all teams in this demo.
     start_node = "Base"
-    
     return routing_service.find_safest_fastest_route(start_node, ward_id, edges_db, hazards)
-
-from services import hazard_service, vulnerability_service, priority_service, routing_service, observation_service, road_status_service
 
 @app.post("/observation")
 def post_observation(obs: Observation):
@@ -120,3 +125,4 @@ def post_observation(obs: Observation):
 def post_road_status(status: RoadStatusUpdate):
     with db_lock:
         return road_status_service.handle_road_status_update(status, edges_db, wards_db)
+

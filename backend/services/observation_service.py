@@ -7,6 +7,8 @@ from models.schemas import Observation, Ward, ObservationAuditEvent
 from datetime import datetime
 from services import hazard_service, vulnerability_service, priority_service
 
+_processed_observations = {}
+
 def _get_ward_priority(ward_id: str, wards_db: List[Ward]) -> float:
     hazards = hazard_service.calculate_hazard(wards_db)
     vulns = vulnerability_service.calculate_vulnerability_and_confidence(wards_db)
@@ -18,6 +20,10 @@ def _get_ward_priority(ward_id: str, wards_db: List[Ward]) -> float:
     return 0.0
 
 def handle_observation_update(obs: Observation, wards_db: List[Ward]) -> Dict[str, Any]:
+    observation_key = (obs.ward_id, obs.timestamp.isoformat(), obs.source_type)
+    if observation_key in _processed_observations:
+        return _processed_observations[observation_key]
+
     target_ward = next((w for w in wards_db if w.ward_id == obs.ward_id), None)
     if not target_ward:
         return {"error": "Ward not found"}
@@ -40,7 +46,9 @@ def handle_observation_update(obs: Observation, wards_db: List[Ward]) -> Dict[st
         new_priority=new_priority
     )
     
-    return {
+    result = {
         "status": "success",
         "audit_event": audit_event.model_dump()
     }
+    _processed_observations[observation_key] = result
+    return result

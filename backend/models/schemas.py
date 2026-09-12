@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional, Literal
 from datetime import datetime
 
@@ -32,15 +32,15 @@ class Edge(BaseModel):
 
 
 class Observation(BaseModel):
-    ward_id: str
+    ward_id: str = Field(min_length=1, max_length=16, pattern=r"^W\d+$")
     timestamp: datetime
-    detected_people_count: int
-    confidence: float
+    detected_people_count: int = Field(ge=0, le=500000)
+    confidence: float = Field(ge=0.0, le=1.0)
     source_type: Literal["simulated_field_observation", "manual_entry"]
-    image_ref: Optional[str] = None
+    image_ref: Optional[str] = Field(default=None, max_length=512)
 
 class RoadStatusUpdate(BaseModel):
-    edge_id: str
+    edge_id: str = Field(min_length=1, max_length=16, pattern=r"^E\d+$")
     status: Literal["blocked", "open"]
     timestamp: datetime
     source_type: Literal["manual_entry"]

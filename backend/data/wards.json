@@ -85,8 +85,8 @@
   },
   {
     "ward_id": "W7",
-    "rainfall_24h_mm": 200,
-    "rainfall_forecast_48h_mm": 80,
+    "rainfall_24h_mm": 140,
+    "rainfall_forecast_48h_mm": 40,
     "elevation_m": 39,
     "low_elevation_susceptibility": 0.9,
     "historical_flood_count_10y": 6,

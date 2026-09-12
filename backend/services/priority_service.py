@@ -51,7 +51,7 @@ def calculate_priorities_and_sizes(wards: List[Ward], hazards: List[Dict], vulne
             "people_to_assist": people_to_assist,
             "required_general_responders": base_responders,
             "required_medical_responders": medical_responders,
-            "total_required": base_responders + medical_responders
+                "total_required": base_responders + medical_responders,
         })
         
     # Sort by priority descending
@@ -83,7 +83,8 @@ def assign_teams(priority_results: List[Dict], available_teams: List[Dict]) -> L
                     "team_id": t['team_id'],
                     "allocated": allocated,
                     "still_needed": needed,
-                    "partial_coverage_warning": partial
+                    "partial_coverage_warning": partial,
+                    "coverage_status": "PARTIAL" if partial else "FULL"
                 })
                 
                 if needed <= 0:
@@ -97,7 +98,8 @@ def assign_teams(priority_results: List[Dict], available_teams: List[Dict]) -> L
                 "team_id": "NONE",
                 "allocated": 0,
                 "still_needed": needed,
-                "partial_coverage_warning": True
+                "partial_coverage_warning": True,
+                "coverage_status": "PARTIAL"
             })
             
     return assignments

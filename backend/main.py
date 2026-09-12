@@ -1,10 +1,14 @@
 import json
 import os
 import threading
-from fastapi import FastAPI, Request
+from fastapi import Depends, FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 from typing import List
+from auth import require_api_key
 from models.schemas import Observation, RoadStatusUpdate, Ward, Edge
 from services import (
     hazard_service,
@@ -16,6 +20,9 @@ from services import (
 )
 
 app = FastAPI(title="Ward-Level Disaster Risk Prioritization", version="1.0.0")
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Enable CORS for frontend integration
 app.add_middleware(
@@ -38,7 +45,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 db_lock = threading.Lock()
 
 # Load data on startup
-DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
+DATA_DIR = os.environ.get("DATA_DIR", "./data")
 WARDS_FILE = os.path.join(DATA_DIR, "wards.json")
 GRAPH_FILE = os.path.join(DATA_DIR, "road_graph.json")
 
@@ -117,12 +124,14 @@ def get_route(team_id: str, ward_id: str):
     return routing_service.find_safest_fastest_route(start_node, ward_id, edges_db, hazards)
 
 @app.post("/observation")
-def post_observation(obs: Observation):
+@limiter.limit("30/minute")
+def post_observation(request: Request, obs: Observation, _: None = Depends(require_api_key)):
     with db_lock:
         return observation_service.handle_observation_update(obs, wards_db)
 
 @app.post("/road-status")
-def post_road_status(status: RoadStatusUpdate):
+@limiter.limit("30/minute")
+def post_road_status(request: Request, status: RoadStatusUpdate, _: None = Depends(require_api_key)):
     with db_lock:
         return road_status_service.handle_road_status_update(status, edges_db, wards_db)
 

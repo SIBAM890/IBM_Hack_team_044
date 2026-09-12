@@ -1,0 +1,63 @@
+{
+  "district": "Patna, Bihar",
+  "river_name": "Ganga at Patna",
+  "danger_level_m": 48.6,
+  "wards": {
+    "W1": {
+      "rainfall_24h_mm": 125.0,
+      "rainfall_forecast_48h_mm": 140.0,
+      "river_level_m": 47.8,
+      "last_updated_hours_ago": 1.0,
+      "source": "IMD_AWS_Patna"
+    },
+    "W2": {
+      "rainfall_24h_mm": 35.0,
+      "rainfall_forecast_48h_mm": 40.0,
+      "river_level_m": 48.0,
+      "last_updated_hours_ago": 0.5,
+      "source": "IMD_AWS_Patna"
+    },
+    "W3": {
+      "rainfall_24h_mm": 65.0,
+      "rainfall_forecast_48h_mm": 70.0,
+      "river_level_m": 49.8,
+      "last_updated_hours_ago": 14.0,
+      "source": "Manual_Gauge_Stale"
+    },
+    "W4": {
+      "rainfall_24h_mm": 80.0,
+      "rainfall_forecast_48h_mm": 90.0,
+      "river_level_m": 49.1,
+      "last_updated_hours_ago": 2.0,
+      "source": "CWC_Sensor_East"
+    },
+    "W5": {
+      "rainfall_24h_mm": 95.0,
+      "rainfall_forecast_48h_mm": 110.0,
+      "river_level_m": 49.5,
+      "last_updated_hours_ago": 1.5,
+      "source": "IMD_AWS_South"
+    },
+    "W6": {
+      "rainfall_24h_mm": 40.0,
+      "rainfall_forecast_48h_mm": 50.0,
+      "river_level_m": 48.2,
+      "last_updated_hours_ago": 1.0,
+      "source": "IMD_AWS_Central"
+    },
+    "W7": {
+      "rainfall_24h_mm": 45.0,
+      "rainfall_forecast_48h_mm": 55.0,
+      "river_level_m": 50.4,
+      "last_updated_hours_ago": 0.5,
+      "source": "CWC_Sensor_Ganga_North"
+    },
+    "W8": {
+      "rainfall_24h_mm": 15.0,
+      "rainfall_forecast_48h_mm": 20.0,
+      "river_level_m": 46.2,
+      "last_updated_hours_ago": 1.0,
+      "source": "IMD_AWS_West"
+    }
+  }
+}

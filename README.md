@@ -1,218 +1,100 @@
-# Disaster Management System
+# RAIC — Ward-Level Disaster Risk Prioritization & Response System
+**Team_044 | IBM BOB National Hackathon 2026 | Problem Statement 1**
 
-Transform disaster management from reactive chaos to structured, transparent intelligence by fusing heterogeneous data streams into actionable, resource-constrained response strategies.
+Transform disaster management from reactive chaos to structured, transparent intelligence by fusing heterogeneous data streams into actionable, resource-constrained response strategies for district control rooms.
 
-## Overview
+---
 
-This application provides a comprehensive disaster management system designed for district emergency operations officers, field rescue coordinators, state disaster management analysts, and control room operators managing crisis response.
+## 1. Data Provenance Table (Mandatory Verification)
 
-## Features
+| Field | Label | Source |
+|---|---|---|
+| `rainfall_24h_mm`, `rainfall_forecast_48h_mm` | Real/archived | IMD daily rainfall, National Water Data Portal — one real historical heavy-monsoon day used for the demo |
+| `elevation_m`, `low_elevation_susceptibility` | Derived from real data | SRTM 30m DEM, computed per ward centroid |
+| `historical_flood_count_10y` | Derived/precomputed | Bhuvan National Flood Vulnerability Index (or NDEM if faster to extract) |
+| `river_level_m` | Synthetic, threshold-grounded | Simulated values, anchored to the real, documented Ganga-at-Patna danger level (48.6m) |
+| `population_at_risk` | Synthetic proxy from real district data | District/block-level Census/OGD population figures distributed proportionally across the 8 synthetic ward boundaries by area — explicitly disclosed as a coarser-than-ward proxy, not ward-census-accurate |
+| `road_status`, `edges.json` | Synthetic scenario | Hand-built small graph, not real road-network data |
+| `image_ref` (observation endpoint) | Sample image | Not a real drone feed |
 
-- **Disaster Incident Management**: Create, read, update, and delete disaster incidents
-- **Multi-type Support**: Handle various disaster types (earthquake, flood, cyclone, fire, landslide, drought, tsunami)
-- **Severity Tracking**: Classify incidents by severity levels (low, medium, high, critical)
-- **Status Management**: Track disaster lifecycle from reported to resolved
-- **Location-based Data**: Store geographic information including coordinates, district, and state
-- **Impact Metrics**: Track affected population, casualties, and estimated damage
-- **Resource Management**: Document deployed resources and response teams
-- **Statistics Dashboard**: Get summary statistics of all disasters
+*Named-but-not-integrated dataset stack*: Bhuvan Spatial Flood Early Warning, NDEM, NASA GDIS, Copernicus EMS, USGS Earthquake, NOAA Natural Hazards — the system is schema-designed to extend to these sources; they are not live-integrated in this prototype build. USGS is a keyless free API noted as a feasible future extension for multi-hazard (earthquake) operations, out of scope for this build.
 
-## Technology Stack
+---
 
-- **Backend Framework**: FastAPI
-- **Database**: SQLite (easily replaceable with PostgreSQL/MySQL)
-- **ORM**: SQLAlchemy
-- **Data Validation**: Pydantic
-- **Architecture**: Modular Monolith
+## 2. Explicit System Non-Goals (Mandatory Disclosures)
 
-## Prerequisites
+- Not competing with Google Flood Hub/IMD on forecast accuracy.
+- Not claiming real drone hardware or operational-grade aerial detection — observation input works manually; a pretrained detector is optional enrichment.
+- Not claiming live integration for any of the 6 named-but-uncited sources above.
+- Not claiming "safest/fastest" — claiming hazard-aware, cost-minimizing routing on a synthetic graph.
+- Not claiming full offline resilience — the backend scoring/routing engine runs on cached local data with no live API calls at inference; the demo frontend (Leaflet via CDN, map tiles) may still require network access — these are explicitly different claims, not conflated.
+- Not fabricating any lives-saved, response-time-%, or efficiency-% figure, ever.
+- Not autonomously dispatching — every output is human-authorized decision support.
+- Team-size ratio, route-cost weight ($\lambda$), and $Q$ threshold are illustrative constants, disclosed as not empirically calibrated.
+- `population_at_risk` is a district-data-derived proxy distributed across synthetic ward boundaries, not ward-level census data.
+- Not a predictive system, not a learning system — weights are hardcoded defaults, not trained or adapted over time.
+- No civilian evacuation routing is implemented — only rescue-team assignment and routing.
 
-- Python 3.8 or higher
-- pip (Python package manager)
+---
 
-## Installation
+## 3. Technology Stack
 
-1. Clone the repository or navigate to the project directory:
-```bash
-cd /app/user_workspace/team_044/33d0d305-67ef-4056-aa57-f5999e6f9f32
-```
+- **Backend**: FastAPI (Python 3.8+), NetworkX (Dijkstra Pathfinding), Pydantic
+- **Frontend**: React 18, Vite, Leaflet, Lucide Icons, Vanilla CSS Glassmorphism
+- **Data Models**: Pre-computed GeoJSON & JSON schema stack
 
-2. Create a virtual environment:
-```bash
-python -m venv venv
-```
+---
 
-3. Activate the virtual environment:
-   - On Linux/Mac:
-     ```bash
-     source venv/bin/activate
-     ```
-   - On Windows:
-     ```bash
-     venv\Scripts\activate
-     ```
+## 4. Installation & Quick Start
 
-4. Install dependencies:
-```bash
-pip install -r backend/requirements.txt
-```
+### Backend (Sibam's Server)
+1. Navigate to repository root:
+   ```bash
+   cd IBM_Hack_team_044
+   ```
+2. Install Python dependencies:
+   ```bash
+   pip install -r backend/requirements.txt networkx uvicorn fastapi
+   ```
+3. Start the FastAPI server:
+   ```bash
+   python -m uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
+   ```
+   * API root: `http://localhost:8000`
+   * Swagger docs: `http://localhost:8000/docs`
 
-5. Create environment configuration:
-```bash
-cp .env.example .env
-```
+### Frontend (Shayanna's Control Room UI)
+1. Install Node dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. Run Vite dev server:
+   ```bash
+   npm run dev
+   ```
+   * Control Room UI: `http://localhost:3000`
 
-6. Edit `.env` file and update configuration as needed (especially SECRET_KEY for production)
+---
 
-## Running the Application
+## 5. API Endpoints Contract
 
-1. Start the FastAPI server:
-```bash
-uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
-```
+- `GET  /scenario` — Patna district wards, edges, current state snapshot
+- `GET  /hazard` — Hazard Index ($H$) per ward (0-100) + factor breakdown
+- `GET  /priorities` — Priority ($P$), Vulnerability ($V$), Confidence ($Q$), verification_flag per ward
+- `GET  /assignments` — Team→ward assignment table, team sizes, partial-coverage flags
+- `GET  /route/{team_id}/{ward_id}` — Hazard-aware route, status, hazard_exposure
+- `POST /observation` — Live field observation input (`ward_id`, `detected_people_count`, etc.)
+- `POST /road-status` — Road edge status update (`edge_id`, `status: "blocked" | "open"`)
 
-2. Access the application:
-   - API: http://localhost:8000
-   - Interactive API Documentation (Swagger): http://localhost:8000/docs
-   - Alternative API Documentation (ReDoc): http://localhost:8000/redoc
+---
 
-## API Endpoints
+## 6. Judge Demo Sequence (7 Sequential Demo Beats)
 
-### Disaster Management
-
-- `POST /api/v1/disasters/` - Create a new disaster incident
-- `GET /api/v1/disasters/` - List all disasters (with optional filters)
-- `GET /api/v1/disasters/{disaster_id}` - Get a specific disaster
-- `PUT /api/v1/disasters/{disaster_id}` - Update a disaster
-- `DELETE /api/v1/disasters/{disaster_id}` - Delete a disaster
-- `GET /api/v1/disasters/stats/summary` - Get disaster statistics
-
-### Query Parameters for Listing
-
-- `skip`: Number of records to skip (pagination)
-- `limit`: Maximum number of records to return
-- `disaster_type`: Filter by disaster type
-- `severity`: Filter by severity level
-- `status_filter`: Filter by status
-- `district`: Filter by district name
-- `state`: Filter by state name
-
-### Health Check
-
-- `GET /` - Root endpoint with API information
-- `GET /health` - Health check endpoint
-
-## Example API Usage
-
-### Create a Disaster
-
-```bash
-curl -X POST "http://localhost:8000/api/v1/disasters/" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Flood in Mumbai",
-    "description": "Heavy rainfall causing severe flooding",
-    "disaster_type": "flood",
-    "severity": "high",
-    "location": "Mumbai Central",
-    "latitude": 19.0760,
-    "longitude": 72.8777,
-    "district": "Mumbai",
-    "state": "Maharashtra",
-    "affected_population": 50000,
-    "casualties": 5,
-    "estimated_damage": 1000000.0
-  }'
-```
-
-### List All Disasters
-
-```bash
-curl -X GET "http://localhost:8000/api/v1/disasters/"
-```
-
-### Get Disaster Statistics
-
-```bash
-curl -X GET "http://localhost:8000/api/v1/disasters/stats/summary"
-```
-
-## Database Schema
-
-### Disaster Model
-
-- `id`: Unique identifier
-- `title`: Disaster title
-- `description`: Detailed description
-- `disaster_type`: Type of disaster (enum)
-- `severity`: Severity level (enum)
-- `status`: Current status (enum)
-- `location`: Location description
-- `latitude`: Geographic latitude
-- `longitude`: Geographic longitude
-- `district`: District name
-- `state`: State name
-- `affected_population`: Number of people affected
-- `casualties`: Number of casualties
-- `estimated_damage`: Estimated financial damage
-- `resources_deployed`: Description of deployed resources
-- `response_team`: Assigned response team
-- `reported_at`: Timestamp when reported
-- `updated_at`: Last update timestamp
-- `resolved_at`: Resolution timestamp
-
-## Project Structure
-
-```
-.
-├── backend/
-│   ├── __init__.py
-│   ├── main.py              # FastAPI application entry point
-│   ├── config.py            # Configuration management
-│   ├── database.py          # Database connection and session
-│   ├── models.py            # SQLAlchemy models
-│   ├── schemas.py           # Pydantic schemas
-│   └── routers/
-│       ├── __init__.py
-│       └── disasters.py     # Disaster management endpoints
-├── .env.example             # Environment variables template
-├── README.md                # This file
-└── requirements.txt         # Python dependencies
-```
-
-## Development
-
-### Database Migrations
-
-The application automatically creates database tables on startup. For production, consider using Alembic for database migrations.
-
-### Adding New Features
-
-1. Define models in `backend/models.py`
-2. Create Pydantic schemas in `backend/schemas.py`
-3. Implement API routes in `backend/routers/`
-4. Register routers in `backend/main.py`
-
-## Security Considerations
-
-- Change `SECRET_KEY` in production environment
-- Use environment variables for sensitive configuration
-- Implement authentication and authorization for production use
-- Use HTTPS in production
-- Configure CORS appropriately for your frontend domain
-- Consider rate limiting for API endpoints
-
-## Target Audience
-
-- **District Emergency Operations Officers**: Monitor and coordinate disaster response at district level
-- **Field Rescue Coordinators**: Track active incidents and resource deployment
-- **State Disaster Management Analysts**: Analyze disaster patterns and impact metrics
-- **Control Room Operators**: Real-time incident tracking and status updates
-
-## License
-
-This project is provided as-is for disaster management purposes.
-
-## Support
-
-For issues or questions, please refer to the API documentation at `/docs` endpoint.
+1. **Beat 1: Hazard Map & Factor Breakdown** (`/hazard`): Click non-rainiest high-risk ward (Ward 7). Display mandatory disclaimer.
+2. **Beat 2: Vulnerability Contrast**: Side-by-side comparison (Ward 8 sparse vs Ward 2 PMCH Medical Hub).
+3. **Beat 3: Confidence Proof**: Ward 3 bright amber `"VERIFY IMMEDIATELY"` flag (14h old river data).
+4. **Beat 4: Priority & Assignments**: Ranked list, team sizing, `⚠ PARTIAL COVERAGE` alert banner.
+5. **Beat 5: Hazard-Aware Routing**: Route map display, "Trigger Road Block" toggle, live reroute + Accessibility flag change, No-Path-Found decision framing.
+6. **Beat 6: Manual Observation**: Submit typed count -> watch vulnerability, priority, team size, assignment, and audit log update live.
+7. **Beat 7: Unified Audit Trail Feed**: Stream log showing `observation_update` & `road_status_update` events.

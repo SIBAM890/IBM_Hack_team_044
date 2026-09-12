@@ -829,16 +829,19 @@ body {
   padding: 52px 24px 64px;
 }
 
-/* ── Full-Bleed Atmospheric Background Hero ────────────────────────────────── */
+/* ── Full-Bleed 100vh Full Screen Atmospheric Background Hero ──────────────── */
 .landing-hero-fullbleed {
   position: relative;
   width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  box-sizing: border-box;
   overflow: hidden;
   background: #050a17;
   border-bottom: 1px solid #1e293b;
-  padding: 124px 24px 90px;
-  min-height: 82vh;
+  padding: 80px 24px 60px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -854,19 +857,18 @@ body {
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .hero-bg-map-img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  max-width: 1260px;
-  object-fit: contain;
-  object-position: center center;
+  object-fit: cover;
+  object-position: center 36%;
   opacity: 1;
-  filter: brightness(0.72) contrast(1.12) saturate(1.18);
+  filter: brightness(0.68) contrast(1.12) saturate(1.18);
 }
 
 .hero-bg-overlay {
@@ -879,21 +881,60 @@ body {
   height: 100%;
   background: radial-gradient(
     ellipse at center,
-    rgba(5, 10, 23, 0.28) 0%,
-    rgba(5, 10, 23, 0.60) 60%,
-    #050a17 100%
+    rgba(5, 10, 23, 0.25) 0%,
+    rgba(5, 10, 23, 0.58) 55%,
+    rgba(5, 10, 23, 0.85) 100%
   );
 }
 
 .landing-hero-content-center {
   position: relative;
   z-index: 2;
-  max-width: 860px;
+  max-width: 880px;
   margin: 0 auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.65);
+  transition: all 0.2s ease;
+  user-select: none;
+  animation: bounce-subtle 2.2s infinite ease-in-out;
+}
+
+.hero-scroll-hint:hover {
+  color: #38bdf8;
+  transform: translateX(-50%) translateY(2px);
+}
+
+.scroll-hint-text {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(6px);
+  }
 }
 
 .landing-badge {

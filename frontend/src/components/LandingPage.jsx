@@ -45,6 +45,19 @@ export default function LandingPage({ onLaunchDashboard, wardsCount, roadBlocked
             </a>
           </div>
         </div>
+
+        {/* Full-Screen Scroll Indicator */}
+        <div 
+          className="hero-scroll-hint" 
+          onClick={() => {
+            document.querySelector('.landing-body-container')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <span className="scroll-hint-text">OPERATIONAL RISK ARCHITECTURE</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
       </section>
 
       {/* Main Content Body */}

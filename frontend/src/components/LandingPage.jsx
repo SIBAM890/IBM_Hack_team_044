@@ -3,92 +3,65 @@ import React from 'react';
 export default function LandingPage({ onLaunchDashboard, wardsCount, roadBlocked }) {
   return (
     <div className="landing-container">
-      {/* Hero Section */}
-      <section className="landing-hero">
-        <div className="landing-hero-grid">
-          <div className="landing-hero-content">
-            <div className="landing-badge">
-              <span className="badge-dot"></span>
-              District Emergency Operations | Urban Inundation Model
-            </div>
-            <h1 className="landing-title">
-              Risk Assessment &amp;<br />Incident Control
-            </h1>
-            <p className="landing-subtitle">
-              Lightweight, explainable disaster risk prioritization and multi-criteria response planning system for district emergency control rooms.
-            </p>
-            
-            <div className="landing-cta-group">
-              <button 
-                className="landing-btn landing-btn-primary"
-                onClick={onLaunchDashboard}
-              >
-                Launch Control Room Dashboard &rarr;
-              </button>
-              <a 
-                href="http://localhost:8000/docs" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="landing-btn landing-btn-secondary"
-              >
-                View OpenAPI Docs &#8599;
-              </a>
-            </div>
+      {/* Hero Section — Full-Width Centered with Atmospheric Tactical Map Background */}
+      <section className="landing-hero-backdrop-wrap">
+        {/* Atmospheric Tactical Map Background Layer */}
+        <div className="hero-bg-map-layer">
+          <img 
+            src="/illustrations/tactical_gis_map.jpg" 
+            alt="Tactical Inundation GIS Map" 
+            className="hero-bg-map-img" 
+          />
+          <div className="hero-bg-overlay"></div>
+        </div>
+
+        {/* Foreground Content */}
+        <div className="landing-hero-content-center">
+          <div className="landing-badge">
+            <span className="badge-dot"></span>
+            District Emergency Operations | Urban Inundation Model
+          </div>
+          <h1 className="landing-title-centered">
+            Risk Assessment &amp; Incident Control
+          </h1>
+          <p className="landing-subtitle-centered">
+            Lightweight, explainable disaster risk prioritization and multi-criteria response planning system for district emergency control rooms.
+          </p>
+          
+          <div className="landing-cta-group-centered">
+            <button 
+              className="landing-btn landing-btn-primary"
+              onClick={onLaunchDashboard}
+            >
+              Launch Control Room Dashboard &rarr;
+            </button>
+            <a 
+              href="http://localhost:8000/docs" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="landing-btn landing-btn-secondary"
+            >
+              View OpenAPI Docs &#8599;
+            </a>
           </div>
 
-          <div className="landing-hero-gis-viewport">
-            <div className="gis-outer-card">
-              {/* Header Bar */}
-              <div className="gis-header-bar">
-                <div className="gis-header-left">
-                  <span className="gis-header-tag">PATNA TACTICAL GIS // ACTIVE INUNDATION CONTOURS</span>
-                </div>
-                <div className="gis-header-right">
-                  <span className="gis-live-pulse"></span>
-                  <span className="gis-live-text">LIVE TELEMETRY</span>
-                </div>
-              </div>
-
-              {/* Map Image Container with Overlay Tactical HUD Badges */}
-              <div className="gis-map-viewport">
-                <img 
-                  src="/illustrations/tactical_gis_map.jpg" 
-                  alt="Patna Tactical GIS Active Inundation Contours" 
-                  className="gis-map-img" 
-                />
-
-                {/* Top-Left Floating Badge */}
-                <div className="gis-hud-badge-tl">
-                  <div className="hud-badge-label">SURGE CONTOUR MODEL</div>
-                  <div className="hud-badge-danger">Danger Mark: 48.6m (BREACHED)</div>
-                </div>
-
-                {/* Bottom-Right Floating Route Badge */}
-                <div className="gis-hud-badge-br">
-                  <div className="hud-badge-label">ACTIVE INBOUND DISPATCH CORRIDOR</div>
-                  <div className="hud-badge-route">HQ Base → Sector 7 Centroid | Travel Time: 14.2 min</div>
-                  <div className="hud-badge-subtext">Corridor Hazard Penalty: MINIMAL | Segments Flagged: 0</div>
-                </div>
-
-                {/* Bottom-Left Legend Pill */}
-                <div className="gis-hud-legend">
-                  <span className="gis-leg-item leg-high">
-                    <span className="leg-dot dot-red"></span> High Risk (H &gt; 70)
-                  </span>
-                  <span className="gis-leg-item leg-mod">
-                    <span className="leg-dot dot-amber"></span> Moderate (H: 50-70)
-                  </span>
-                  <span className="gis-leg-item leg-safe">
-                    <span className="leg-dot dot-teal"></span> Safe/Low (H &lt; 50)
-                  </span>
-                </div>
-              </div>
-
-              {/* Footer Status Bar */}
-              <div className="gis-footer-bar">
-                <span>Elevation Model: SRTM 30m · Re-route Latency: &lt;120ms</span>
-                <span>Recon Unit: Drone Pass #04 Active</span>
-              </div>
+          {/* 4 Centered Metric Stat Cards */}
+          <div className="hero-stat-cards-row">
+            <div className="hero-stat-card">
+              <div className="hsc-value">8</div>
+              <div className="hsc-label">District Sectors Monitored</div>
+            </div>
+            <div className="hero-stat-card">
+              <div className="hsc-value">48.6m</div>
+              <div className="hsc-label">River Danger Mark</div>
+            </div>
+            <div className="hero-stat-card">
+              <div className="hsc-value">Multi-Criteria</div>
+              <div className="hsc-label">Explainable Risk Model</div>
+            </div>
+            <div className="hero-stat-card">
+              <div className="hsc-value">&lt;120ms</div>
+              <div className="hsc-label">Dynamic Re-route Latency</div>
             </div>
           </div>
         </div>

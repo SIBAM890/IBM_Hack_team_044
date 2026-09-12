@@ -1,6 +1,14 @@
 import asyncio
 from datetime import datetime, timezone
-from httpx import AsyncClient
+try:
+    from httpx import AsyncClient, ASGITransport
+    def get_client():
+        return AsyncClient(transport=ASGITransport(app=app), base_url='http://test')
+except ImportError:
+    from httpx import AsyncClient
+    def get_client():
+        return AsyncClient(app=app, base_url='http://test')
+
 from main import app, startup_event
 
 OBS_BODY = {
@@ -29,7 +37,7 @@ ENDPOINTS = [
 
 async def verify():
     startup_event()
-    async with AsyncClient(app=app, base_url='http://test') as ac:
+    async with get_client() as ac:
         print('README API contract vs live endpoints:')
         all_pass = True
         for method, path, body in ENDPOINTS:
